@@ -1,0 +1,36 @@
+import discord
+from discord.ext import commands
+import random
+import os
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='$', intents=intents)
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hi! I am a bot {bot.user}!')
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def mem(ctx):
+    img_name = random.choice(os.listdir('imagess'))
+    with open(f'imagess/{img_name}', 'rb') as f:
+        # Dönüştürülen Discord kütüphane dosyasını bu değişkende saklayalım!
+        picture = discord.File(f)
+   # Daha sonra bu dosyayı bir parametre olarak gönderebiliriz!
+    await ctx.send(file=picture)
+
+
+@bot.command()
+async def bil(ctx):
+    await ctx.send('Masa ustu bir bilgisayar donanima bağli olarak saatte 17,5 kW elektrik harcar !')
+
+@bot.command()
+async def telfonşarjetme(ctx):
+    await ctx.send('telefon şarjdayken ortalama 2W ila 6W elektrik harcar !')
+
+bot.run("")
